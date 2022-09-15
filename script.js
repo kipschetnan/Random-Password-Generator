@@ -13,54 +13,63 @@ function promptLength(message = "How many characters would you like") {
 }
 
 function includeLower() {
-  let lowerCase = prompt('Do you want to include lowercase letters? Y/N');
-  let lowerBool = false;
-  if (lowerCase === 'Y'){
-    lowerBool = true;
-  } 
-  return lowerBool;
+  let lowerCase = confirm('Do you want to include lowercase letters?');
+  return lowerCase;
 }
 
 function includeUpper() {
-  let upperCase = prompt('Do you want to include uppercase letters? Y/N');
-  let upperBool = false;
-  if (upperCase === 'Y'){
-    upperBool = true;
-  } 
-  return upperBool;
+  let upperCase = confirm('Do you want to include uppercase letters?');
+  return upperCase;
 }
 
 function includeNumeric() {
-  let numeric = prompt('Do you want to include numbers? Y/N');
-  let numericBool = false;
-  if (numeric === 'Y'){
-    numericBool = true;
-  } 
-  return numericBool;
+  let numeric = confirm('Do you want to include numbers?');
+  return numeric;
 }
 
 function includeSpecialChars() {
-  let specialChars = prompt('Do you want to include special characters? Y/N');
-  let specialCharsBool = false;
-  if (specialChars === 'Y'){
-    specialCharsBool = true;
-  }
-  return specialCharsBool; 
+  let specialChars = confirm('Do you want to include special characters?');
+  return specialChars; 
 }
 
+const numbers = ['0','1','2','3','4','5','6','7','8','9'];
+const lowerAlpha = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+const upperAlpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+const chars = ['!','@','#','$','%','^','&','*','(',')'];
 
 function generatePassword() {
   const length = promptLength();
-  const lower = includeLower();
-  const upper = includeUpper();
-  const numeric = includeNumeric();
-  const specialChars = includeSpecialChars();
+  let lower = includeLower();
+  let upper = includeUpper();
+  let numeric = includeNumeric();
+  let specialChars = includeSpecialChars();
+  let mainArray = [];
+  let password = ''
 
   if (lower === false && upper === false && numeric === false && specialChars === false) {
-    alert('Pick at least one special character.')
+    alert('Pick at least one special character.');
     generatePassword();
   }
+
+  if (lower) {
+    mainArray = mainArray.concat(lowerAlpha);
+  }
+  if (upper) {
+    mainArray = mainArray.concat(upperAlpha);
+  }
+  if (numeric) {
+    mainArray = mainArray.concat(numbers);
+  }
+  if (specialChars) {
+    mainArray = mainArray.concat(chars);
+  }
   
+  for (var i = 0; i < length; i++) {
+    var randomNumber = Math.floor(Math.random() * mainArray.length);
+    password += mainArray[randomNumber];
+  }
+  
+  return password;
 }
 
 // Write password to the #password input
